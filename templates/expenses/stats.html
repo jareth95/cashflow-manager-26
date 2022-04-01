@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4">
+<div class="row mb-3">
+<div class="col-md-10">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Cashflow Summary</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Summary</li>
+        </ol>
+      </nav>
+</div>
+<div class="row">
+  {% for year in years %}
+  <div class="col-md-1 m-0 p-0 btn btn-secondary year">{{year}}</div>
+  {% endfor %}
+</div>
+<div class="row">
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">January</div>
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">February</div>
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">March</div>
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">April</div>
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">May</div>
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">June</div>
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">July</div>
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">August</div>
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">September</div>
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">October</div>
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">November</div>
+  <div class="col-md-1 m-0 p-0 btn btn-secondary month">December</div>
+</div>
+<div class="row">
+  <div class="col-md-2"></div>
+<div class="col-md-4">
+  <div class="col-md-12">
+    <canvas id="myExpensesChart" width="400" height="400"></canvas>
+    <h6 id="expenses-total">Expenses Total: </h6>
+  </div>
+  </div>
+  <div class="col-md-4">
+    <div class="col-md-12">
+      <canvas id="myIncomeChart" width="400" height="400"></canvas>
+      <h6 id="income-total">Income Total: </h6>
+    </div>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+   
+</div>
+</div>
+
+<script src="{% static 'js/stats.js' %}"></script>
+
+{% endblock content %}

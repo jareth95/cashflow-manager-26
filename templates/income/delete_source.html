@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'income' %}">Income</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Delete Source</li>
+        </ol>
+      </nav>
+      
+
+          <div class="card">
+            <form action="{% url 'delete-source' %}" method="post">
+                {% include 'partials/_messages.html' %}
+                {% csrf_token %}
+              <div class="card-body">
+                <div class="form-group py-2">
+                    <label for="source">Source</label>
+                   <select name="source" class="form-control form-control-sm">
+                       {% for source in sources %}
+                       <option name="source" value="{{source.name}}">{{source.name}}</option>
+                       {% endfor %}
+                   </select>
+                </div>
+              </div>
+              <input type="submit" value="Delete" class="btn btn-danger mx-3">
+            </form>
+          </div>
+      
+</div>
+
+{% endblock content %}

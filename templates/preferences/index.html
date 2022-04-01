@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-3">
+  <div class="row">
+    <h5>Preferred Currency</h5>
+    <hr>
+    {% include 'partials/_messages.html' %}
+    <form action="{% url 'preferences' %}" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <select name="currency" class="form-select" id="inputGroupSelect01">
+                {% if user_preferences.currency %}
+                <option name="currency" value="{{user_preferences.currency}}" selected>{{user_preferences.currency}}</option>
+                {% endif %}
+              {% for currency in currencies %}
+              <option name="currency" value="{{currency.name}} - {{currency.value}}">{{currency.name}} - {{currency.value}}</option>
+              {% endfor %}
+            </select>
+            <input class="btn btn-outline-secondary" type="submit" value="Save" />
+          </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <h5>Account Settings</h5>
+    <hr>
+      <a href="{% url 'change-password' %}" class="btn btn-warning">Change Password</a>
+    </div>
+    
+  </div>
+    
+</div>
+
+
+
+{% endblock %}
