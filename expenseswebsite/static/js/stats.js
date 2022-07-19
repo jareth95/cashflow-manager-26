@@ -1,5 +1,7 @@
 const renderChart =(data, labels, chartName, title)=> {
     const ctx = document.getElementById(chartName).getContext('2d');
+    console.log(data)
+    console.log(labels)
     const myChart = new Chart(ctx, {
     type: 'pie',
     data: {

@@ -2,6 +2,7 @@ from unicodedata import name
 from django.urls import path
 from . import views
 from django.views.decorators.csrf import csrf_exempt
+from . import api_views
 
 
 urlpatterns = [
@@ -14,5 +15,8 @@ urlpatterns = [
     path('search-expenses', csrf_exempt(views.search_expenses), name='search-expenses'),
     path('expense_category_summary/<int:year>/<int:month>', views.expense_category_summary, name='expense_category_summary'),
     path('income_category_summary/<int:year>/<int:month>', views.income_category_summary, name='income_category_summary'),
-    path('stats', views.stats_view, name='stats')
+    path('stats', views.stats_view, name='stats'),
+    path('expenses/api/v1/', api_views.ExpenseList.as_view()),
+    path('expenses/api/v1/new/', api_views.ExpenseCreate.as_view()),
+    path('expenses/api/v1/<int:id>/', api_views.ExpenseRetrieveUpdateDestroy.as_view())
 ]

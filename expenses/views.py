@@ -243,8 +243,6 @@ def stats_view(request):
     years = expense_years + list(in_second_but_not_in_first)
     years.sort()
 
-    print(years)
-
     return render(request, 'expenses/stats.html', {'years':years})
 
     
