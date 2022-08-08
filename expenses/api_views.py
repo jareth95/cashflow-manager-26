@@ -5,8 +5,9 @@ from expenses.serializers import ExpenseSerializer
 from expenses.models import Expense
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated 
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
 
 
 class ExpensesPagination(LimitOffsetPagination):
@@ -25,19 +26,27 @@ class ExpenseList(ListAPIView):
 
 
 class ExpenseCreate(CreateAPIView):
+    permission_classes = (IsAuthenticated,) 
     serializer_class = ExpenseSerializer
 
     def create(self, request, *args, **kwargs):
-        try:
-            amount = request.data.get('amount')
-            if amount is not None and float(amount) <= 0.0:
-                raise ValidationError({'amount': 'Must be above £0.00'})
-        except ValueError:
-            raise ValidationError({'amount': 'Amount has to be a number'})
-        return super().create(request, *args, **kwargs)
+        expense_data = request.data
+        user = Token.objects.get(key=expense_data['owner']).user
+        print(expense_data)
+        new_expense = Expense.objects.create(
+            owner=user,
+            amount=expense_data['amount'],
+            category=expense_data['category'],
+            date=expense_data['date'],
+            description=expense_data['description']
+        ).save()
+
+        serializer = ExpenseSerializer(new_expense)
+        return Response(serializer.data)
 
 
 class ExpenseRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,) 
     queryset = Expense.objects.all()
     lookup_field = 'id'
     serializer_class = ExpenseSerializer

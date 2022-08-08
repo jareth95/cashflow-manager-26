@@ -25,6 +25,7 @@ class IncomeList(ListAPIView):
 
 
 class IncomeCreate(CreateAPIView):
+    permission_classes = (IsAuthenticated,) 
     serializer_class = IncomeSerializer
 
     def create(self, request, *args, **kwargs):
@@ -38,6 +39,7 @@ class IncomeCreate(CreateAPIView):
 
 
 class IncomeRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,) 
     queryset = Income.objects.all()
     lookup_field = 'id'
     serializer_class = IncomeSerializer
